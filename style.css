@@ -1,0 +1,82 @@
+:root {
+    --primary-dark: #333;
+    --secondary-dark: #444;
+    --primary-light: #eee;
+    --secondary-light: #ddd;
+  }
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body{
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    font-family: "Montserrat", sans-serif;
+    line-height: 1.6;
+    /* footer support */
+    margin-bottom: 48px;
+}
+
+/* HEADER */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fa-check-double {
+    font-size: 40px;
+}
+
+.page-name {
+    font-family: 'Yusei Magic', sans-serif;
+    font-size: 40px;
+    margin-left: 10px;
+}
+
+/* MAIN */
+
+/* FOOTER */
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+    font-size: 18px;
+}
+
+.fa-github {
+    color: var(--primary-light);
+    font-size: 22px;
+    transition: transform 0.3s ease-in-out;
+}
+  
+.fa-github:hover {
+transform: rotate(360deg) scale(1.2);
+}
