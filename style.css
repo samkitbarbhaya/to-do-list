@@ -105,7 +105,7 @@ body{
     margin-right: 5px;
 }
 
-/* USER BUTTON */
+/* USER PROJECT LIST */
 
 .nav-user-projects{
     margin-top: 20px;
@@ -139,6 +139,8 @@ body{
 .nav-user-button > i{
     margin-right: 5px;
 }
+
+/* ADD PROJECT POPUP*/
 
 .button-add-project{
     width: 100%;
