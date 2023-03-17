@@ -140,7 +140,7 @@ body{
     margin-right: 5px;
 }
 
-/* ADD PROJECT POPUP*/
+/* ADD PROJECT BUTTON*/
 
 .button-add-project{
     width: 100%;
@@ -160,6 +160,49 @@ body{
 
 .button-add-project > i{
     margin-right: 5px;
+}
+
+/* ADD PROJECT BUTTON POPUP */
+
+.add-project-popup{
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-project-popup:hover{
+    background-color: pink;
+}
+
+.add-project-input{
+    border-radius: 5px;
+    line-height: 3;
+    padding-left: 10px;
+    border: none;
+}
+
+.add-project-popup-buttons{
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.add-project-popup-add-button{
+    width: calc(100%/2);
+    line-height: 3;
+    background-color: #96FAA5;
+    border-radius: 5px;
+    border: none;
+}
+
+.add-project-popup-cancel-button{
+    width: calc(100%/2);
+    line-height: 3;
+    background-color: #FAB4B4;
+    border-radius: 5px;
+    border: none;
 }
 
 /* FOOTER */
