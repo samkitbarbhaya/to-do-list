@@ -2,42 +2,52 @@ import {task} from './Task'
 import { toDate, isToday, isThisWeek, subDays } from 'date-fns'
 
 const project = (name) => {
-    this.name = name
+
     let taskList = []
-    const getName = ()=> this.name
-    const setName = (name)=> this.name = name
+
     const addTask = (taskName)=>{
+        if(taskList.find((taskEl)=>{ taskEl.Name === taskName})) return
         let taskEl = task(taskName)
-        taskList.append(taskEl)
+        taskList.push(taskEl)
     }
+
     const removeTask = (taskName)=>{
-        this.taskList = this.taskList.filter((taskEl)=>{
-            return taskEl.getName() !== taskName
+        taskList = taskList.filter((taskEl)=>{
+            return taskEl.Name !== taskName
         })
     }
-    const getTaskList = ()=>{
-        return taskList
-    }
+
     const getTasksToday = ()=>{
         return this.taskList.filter((taskEl)=>{
-            const taskDate = new Date(taskEl.getDate())
+            const taskDate = new Date(taskEl.Date)
             return isToday(toDate(taskDate))
         })
     }
+    
     const getTasksWeek = ()=>{
         return this.tasks.filter((taskEl) => {
-            const taskDate = new Date(taskEl.getDate())
+            const taskDate = new Date(taskEl.Date)
             return isThisWeek(subDays(toDate(taskDate), 1))
         })
     }
+
     return {
-        getName,
-        setName,
+        get Name(){
+            return name
+        },
+        set Name(projectName){
+            name = projectName
+        },
+        get TaskList(){
+            return taskList
+        },
+        set TaskList(projectTaskList){
+            taskList = projectTaskList
+        },
         addTask,
         removeTask,
-        getTaskList,
         getTasksToday,
-        getTasksWeek
+        getTasksWeek,    
     }
 }
 
