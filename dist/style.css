@@ -165,8 +165,14 @@ body{
 /* ADD PROJECT BUTTON POPUP */
 
 .add-project-popup{
+    display: none;
     padding: 10px;
+    text-align: center;
     border-radius: 5px;
+
+}
+
+.add-project-popup.active {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -195,6 +201,8 @@ body{
     background-color: #96FAA5;
     border-radius: 5px;
     border: none;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 .add-project-popup-cancel-button{
@@ -203,6 +211,8 @@ body{
     background-color: #FAB4B4;
     border-radius: 5px;
     border: none;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 /* FOOTER */
