@@ -26,15 +26,15 @@
         <nav class="nav">
             <!-- Default Projects -->
             <div class="nav-default-projects">
-                <button class="nav-default-button">
+                <button class="nav-default-button" id="inbox-button">
                     <i class="fas fa-inbox" aria-hidden="true"></i>
                     Inbox 
                 </button>
-                <button class="nav-default-button">
+                <button class="nav-default-button" id="today-button">
                     <i class="fas fa-calendar-day"></i>
                     Today   
                 </button>
-                <button class="nav-default-button">
+                <button class="nav-default-button" id="this-week-button">
                     <i class="fas fa-calendar-week"></i>
                     This Week   
                 </button>
@@ -43,7 +43,7 @@
             <div class="nav-user-projects">
                 <div class="nav-user-projects-title">Projects</div>
                 <div class="projects-list"></div>
-                <button class="button-add-project">
+                <button class="button-add-project" id="button-add-project">
                     <i class="fa-solid fa-plus"></i>
                     Add Project
                 </button>
@@ -52,12 +52,18 @@
                     <div class="add-project-popup-buttons">
                         <button class="add-project-popup-add-button">Add</button>
                         <button class="add-project-popup-cancel-button">Cancel</button>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </nav>
         <div class="project-preview">
-            <input type="date"/>
+            <h1 id="project-title">Inbox</h1>
+            <div class="task-list">
+            </div>
+            <button class="button-add-task">
+                <i class="fas fa-plus" aria-hidden="true"></i>
+                Add Task
+            </button>
         </div>
     </main>
     <footer class="footer">
