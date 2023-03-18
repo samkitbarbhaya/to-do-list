@@ -25,6 +25,21 @@ body{
     margin-bottom: 48px;
 }
 
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+button, input {
+    border: inherit;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+}
+
 /* HEADER */
 
 .header {
@@ -101,7 +116,7 @@ body{
     background-color: #C5C5C5;
 }
 
-.nav-default-button.selected{
+.nav-default-button.active{
     font-weight: bold;
     background-color: #C5C5C5;
 }
@@ -131,17 +146,19 @@ body{
     background-color: var(--secondary-light);
     color: var(--secondary-dark);
     font-size: 16px;
-    padding: 10px;
     padding-left: 15px;
     border-radius: 5px;
     text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .nav-user-button:hover{
     background-color: #C5C5C5;
 }
 
-.nav-user-button.selected{
+.nav-user-button.active{
     font-weight: bold;
     background-color: #C5C5C5;
 }
@@ -153,6 +170,7 @@ body{
 /* ADD PROJECT BUTTON*/
 
 .button-add-project{
+    margin-top: 10px;
     width: 100%;
     border: none;
     background-color: var(--secondary-light);
@@ -172,10 +190,15 @@ body{
     margin-right: 5px;
 }
 
+.button-add-project.invisible {
+    display: none;
+}
+
 /* ADD PROJECT BUTTON POPUP */
 
 .add-project-popup{
     display: none;
+    margin-top: 10px;
     padding: 10px;
     text-align: center;
     border-radius: 5px;
@@ -187,15 +210,15 @@ body{
     gap: 10px;
 }
 
-.add-project-popup:hover{
-    background-color: pink;
-}
-
 .add-project-input{
     border-radius: 5px;
     line-height: 3;
     padding-left: 10px;
     border: none;
+}
+
+.add-project-input:focus {
+    outline: none;
 }
 
 .add-project-popup-buttons{
@@ -224,6 +247,111 @@ body{
     font-size: 15px;
 }
 
+/* PROJECT PREVIEW */
+
+.project-preview {
+    width: 900px;
+    padding: 20px 40px;
+    margin: 0 auto;
+}
+
+.project-preview > h1 {
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+.button-task {
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: var(--primary-light);
+    cursor: default;
+}
+
+.button-task:hover {
+    background-color: #C5C5C5;
+}
+
+.left-task-panel, .right-task-panel {
+    display: flex;
+    align-items: center;
+    gap:10px
+}
+
+.right-task-panel > i{
+    margin-right: 10px;
+}
+
+.fa-circle {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.task-content {
+    cursor: pointer;
+}
+
+.input-task-name {
+    display: none;
+}
+
+.input-task-name.active {
+    display: block;
+    height: 1.5em;
+    border-radius: 5px;
+    border: 0.5px solid var(--primary-dark);
+    background-color: var(--primary-light);
+}
+
+.input-task-name:focus {
+    outline: none;
+}
+
+.input-due-date{
+    display: none;
+}
+
+.input-due-date.active{
+    padding: 0px 2px;
+    display: block;
+    height: 1.5em;
+    border-radius: 5px;
+    border: 0.5px solid var(--primary-dark);
+    background-color: var(--primary-light);
+}
+
+.button-add-task {
+    margin-top: 10px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    background-color: var(--primary-light);
+    cursor: default;
+}
+
+.button-add-task:hover {
+    background-color: #C5C5C5;
+}
+
+.button-add-task > i {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.button-add-task.invisible {
+    display: none;
+}
+
 /* FOOTER */
 
 .footer {
@@ -239,6 +367,10 @@ body{
     background-color: var(--primary-dark);
     color: var(--primary-light);
     font-size: 18px;
+}
+
+.fab, .far{
+    font-weight: 400;
 }
 
 .fa-github {
