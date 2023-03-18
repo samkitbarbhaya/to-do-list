@@ -31,7 +31,11 @@ const Display = ()=>{
         })
     }
 
+
+    // Highlights the project tab and Displays the relevant task items
+    
     const openProject = (projectName, buttonElement)=>{
+
         console.log("Opening",projectName)
         //Fetch All Nav Buttons and remove active class from them
         const defaultButtons = document.querySelectorAll('.nav-default-button')
@@ -62,7 +66,6 @@ const Display = ()=>{
 
     const initProjectButtons = ()=>{
 
-        console.log("Initiating Buttons")
         const inboxButton = document.querySelector("#inbox-button")
         const todayButton = document.querySelector("#today-button")
         const weekButton =  document.querySelector("#this-week-button")
