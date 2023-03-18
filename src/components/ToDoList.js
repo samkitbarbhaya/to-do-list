@@ -21,6 +21,10 @@ const toDoList = ()=>{
         })
     }
 
+    const contains = (projectName)=>{
+        return projectList.find((project)=> project.Name===projectName)
+    }
+
     const updateTodayProject = ()=>{
         getProject('Today').TaskList = []
 
@@ -56,6 +60,7 @@ const toDoList = ()=>{
         addProject,
         removeProject,
         getProject,
+        contains,
         updateTodayProject,
         updateWeekProject
     }

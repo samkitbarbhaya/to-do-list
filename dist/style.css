@@ -158,6 +158,10 @@ button, input {
     background-color: #C5C5C5;
 }
 
+.nav-user-button:hover i{
+    display: block;
+}
+
 .nav-user-button.active{
     font-weight: bold;
     background-color: #C5C5C5;
@@ -363,10 +367,10 @@ button, input {
     justify-content: center;
     gap: 10px;
     width: 100%;
-    padding: 10px;
     background-color: var(--primary-dark);
     color: var(--primary-light);
     font-size: 18px;
+    height: 50px;
 }
 
 .fab, .far{
@@ -381,4 +385,8 @@ button, input {
   
 .fa-github:hover {
 transform: rotate(360deg) scale(1.2);
+}
+
+i.fa-times {
+    display: none;
 }
