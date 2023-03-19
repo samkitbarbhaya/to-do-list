@@ -135,7 +135,7 @@ const Display = ()=>{
         removeTaskIcons.forEach((icon)=>{
             icon.addEventListener("click",(e)=>{
                 const projectName = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].textContent
-                const taskName = e.target.parentNode.childNodes[3]
+                const taskName = e.target.parentNode.childNodes[3].textContent
                 const taskNode = e.target.parentNode.parentNode
                 deleteTask(taskNode)
                 removeTask(taskName, projectName)
@@ -310,7 +310,6 @@ const Display = ()=>{
     const removeTask = (taskName, projectName)=>{
         const projectObj = toDoListObj.getProject(projectName)
         projectObj.removeTask(taskName)
-        console.log(projectObj.TaskList)
     }
 
     return{
