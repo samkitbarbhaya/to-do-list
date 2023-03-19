@@ -36,6 +36,11 @@ const Display = ()=>{
     // Highlights the project tab and Displays the relevant task items
     const openProject = (projectName, buttonElement)=>{
 
+        makeAddProjectButtonVisible()
+        makeAddProjectPopupInvisible()
+        makeAddTaskButtonVisible()
+        makeTaskPopupInvisible()
+
         console.log("Opening",projectName)
         //Fetch All Nav Buttons and remove active class from them
         const defaultButtons = document.querySelectorAll('.nav-default-button')
