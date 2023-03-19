@@ -17,15 +17,23 @@ const project = (name) => {
         })
     }
 
+    const contains = (taskName)=>{
+        return taskList.find((task)=> task.Name === taskName)
+    }
+
+    const getTask = (taskName)=>{
+        return taskList.find((task)=> task.Name === taskName)
+    }
+
     const getTasksToday = ()=>{
-        return this.taskList.filter((taskEl)=>{
+        return taskList.filter((taskEl)=>{
             const taskDate = new Date(taskEl.Date)
             return isToday(toDate(taskDate))
         })
     }
     
     const getTasksWeek = ()=>{
-        return this.tasks.filter((taskEl) => {
+        return taskList.filter((taskEl) => {
             const taskDate = new Date(taskEl.Date)
             return isThisWeek(subDays(toDate(taskDate), 1))
         })
@@ -46,6 +54,8 @@ const project = (name) => {
         },
         addTask,
         removeTask,
+        contains,
+        getTask,
         getTasksToday,
         getTasksWeek,    
     }

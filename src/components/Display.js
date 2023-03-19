@@ -20,6 +20,7 @@ const Display = ()=>{
         initProjectButtons()
         openProject('Inbox',document.querySelector('#inbox-button'))
         initAddProjectButtons()
+        initAddTaskButton()
     }
 
     //Fetch Projects from the Storage and render them into the Nav Bar
@@ -33,7 +34,6 @@ const Display = ()=>{
 
 
     // Highlights the project tab and Displays the relevant task items
-    
     const openProject = (projectName, buttonElement)=>{
 
         console.log("Opening",projectName)
@@ -105,6 +105,8 @@ const Display = ()=>{
         addProjectButton.addEventListener("click",()=>{
             makeAddProjectButtonInvisible()
             makeAddProjectPopupVisible()
+            makeAddTaskButtonVisible()
+            makeTaskPopupInvisible()
         })
 
         addProjectAddButton.addEventListener("click",addProject)
@@ -115,15 +117,28 @@ const Display = ()=>{
         })
     }
 
+    const initAddTaskButton = ()=>{
+
+        const addTaskButton = document.querySelector('.button-add-task')
+        const addTaskAddButton = document.querySelector('.button-add-task-popup')
+        const addTaskCancelButton = document.querySelector('.button-cancel-task-popup')
+        
+        addTaskButton.addEventListener("click",()=>{
+            makeAddProjectButtonVisible()
+            makeAddProjectPopupInvisible()
+            makeAddTaskButtonInvisible()
+            makeTaskPopupVisible()
+        })
+
+        addTaskAddButton.addEventListener("click",addTask)
+
+        addTaskCancelButton.addEventListener("click",()=>{
+            makeTaskPopupInvisible()
+            makeAddTaskButtonVisible()
+        })
+    }
+
     // Toggling Button Visibility
-
-    const makeAddTaskButtonVisible = ()=>{
-        document.querySelector('.button-add-task').classList.remove("invisible")
-    }
-
-    const makeAddTaskButtonInvisible = ()=>{
-        document.querySelector('.button-add-task').classList.add("invisible")
-    }
 
     const makeAddProjectButtonVisible = ()=>{
         document.querySelector('.button-add-project').classList.remove('invisible')
@@ -140,6 +155,23 @@ const Display = ()=>{
 
     const makeAddProjectPopupInvisible = ()=>{
         document.querySelector('.add-project-popup').classList.remove('active')
+    }
+
+    const makeAddTaskButtonVisible = ()=>{
+        document.querySelector('.button-add-task').classList.remove("invisible")
+    }
+
+    const makeAddTaskButtonInvisible = ()=>{
+        document.querySelector('.button-add-task').classList.add("invisible")
+    }
+
+    const makeTaskPopupVisible = ()=>{
+        document.querySelector('.input-add-task-popup').value = ""
+        document.querySelector('.add-task-popup').classList.add('active')
+    }
+
+    const makeTaskPopupInvisible = ()=>{
+        document.querySelector('.add-task-popup').classList.remove('active')
     }
 
     //Creating Content HTML Files
@@ -199,6 +231,34 @@ const Display = ()=>{
         createProject(projectName)
         makeAddProjectButtonVisible()
         makeAddProjectPopupInvisible()
+    }
+
+    const addTask = ()=>{
+
+        const taskName = document.querySelector('.input-add-task-popup').value
+        
+        if(taskName == ""){
+            alert("Task Name cannot be Blank!")
+            return
+        }
+
+        const projectName = document.querySelector('#project-title').innerHTML
+        
+        const projectObj = toDoListObj.getProject(projectName)
+
+        if(projectObj.contains(taskName)){
+            alert("Task Name already taken!")
+            return
+        }
+
+        const taskObj = task(taskName)
+
+        projectObj.addTask(taskObj.Name)
+
+        createTask(taskObj.Name,taskObj.Date)
+
+        makeAddTaskButtonVisible()
+        makeTaskPopupInvisible()
     }
 
     return{
