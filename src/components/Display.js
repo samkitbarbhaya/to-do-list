@@ -20,7 +20,7 @@ const Display = ()=>{
         initProjectButtons()
         openProject('Inbox',document.querySelector('#inbox-button'))
         initAddProjectButtons()
-        initAddTaskButton()
+        initAddTaskButtons()
     }
 
     //Fetch Projects from the Storage and render them into the Nav Bar
@@ -122,7 +122,7 @@ const Display = ()=>{
         })
     }
 
-    const initAddTaskButton = ()=>{
+    const initAddTaskButtons = ()=>{
 
         const addTaskButton = document.querySelector('.button-add-task')
         const addTaskAddButton = document.querySelector('.button-add-task-popup')
