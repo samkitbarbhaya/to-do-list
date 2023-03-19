@@ -300,11 +300,16 @@ button, input {
     cursor: pointer;
 }
 
+.task-content.invisible {
+    display: none;
+}
+
 .input-task-name {
     display: none;
 }
 
 .input-task-name.active {
+    padding: 0px 5px;
     display: block;
     height: 1.5em;
     border-radius: 5px;

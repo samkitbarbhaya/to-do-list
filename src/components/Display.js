@@ -132,6 +132,8 @@ const Display = ()=>{
     const initTaskButtons = ()=>{
 
         const removeTaskIcons = document.querySelectorAll('#remove-task-icon')
+        const taskLabels = document.querySelectorAll('.task-content')
+
         removeTaskIcons.forEach((icon)=>{
             icon.addEventListener("click",(e)=>{
                 const projectName = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].textContent
@@ -141,6 +143,42 @@ const Display = ()=>{
                 removeTask(taskName, projectName)
             })
         })
+
+        taskLabels.forEach((taskLabel)=>{
+            taskLabel.addEventListener("click",(e)=>{
+                const taskLabelNode = e.target
+                const oldTaskLabelValue = taskLabelNode.textContent
+                const taskLabelInputNode = e.target.parentNode.childNodes[5]
+                taskLabelInputNode.value = oldTaskLabelValue
+
+                makeTaskLabelInvisible(taskLabelNode)
+                makeTaskLabelInputVisible(taskLabelInputNode)
+                addEventListener("keypress", (e) => {
+                    if(e.key=='Enter'){
+                        const newTaskLabelValue = taskLabelInputNode.value
+                        if(newTaskLabelValue === oldTaskLabelValue){
+                            alert("Name of the Task cannot be the same!")
+                            return
+                        }
+                        const projectName = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].textContent
+                        const projectObj = toDoListObj.getProject(projectName)
+                        if(projectObj.contains(newTaskLabelValue)){
+                            alert("This name has already been taken by another task!")
+                            return
+                        }
+
+                        taskLabelNode.textContent = taskLabelInputNode.value
+                        const taskObj = projectObj.getTask(oldTaskLabelValue)
+                        taskObj.Name = newTaskLabelValue
+                        
+                        makeTaskLabelVisible(taskLabelNode)
+                        makeTaskLabelInputInvisible(taskLabelInputNode)
+                    }
+                });
+            })
+        })
+
+
     }
 
     const initAddTaskButtons = ()=>{
@@ -198,6 +236,23 @@ const Display = ()=>{
 
     const makeTaskPopupInvisible = ()=>{
         document.querySelector('.add-task-popup').classList.remove('active')
+    }
+
+    const makeTaskLabelVisible = (taskLabelNode)=>{
+        taskLabelNode.classList.remove('invisible')
+    }
+
+    const makeTaskLabelInvisible = (taskLabelNode)=>{
+        taskLabelNode.classList.add('invisible')
+    }
+
+    const makeTaskLabelInputVisible = (taskLabelInputNode)=>{
+        taskLabelInputNode.classList.add('active')
+    }
+
+    const makeTaskLabelInputInvisible = (taskLabelInputNode)=>{
+        taskLabelInputNode.value = ""
+        taskLabelInputNode.classList.remove('active')
     }
 
     //Creating Content HTML Files
