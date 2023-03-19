@@ -75,7 +75,8 @@ const Display = ()=>{
         const todayButton = document.querySelector("#today-button")
         const weekButton =  document.querySelector("#this-week-button")
         const projectButtons = document.querySelectorAll(".nav-user-button")
-
+        const removeProjectIcons = document.querySelectorAll('#remove-project-icon')
+        
         inboxButton.addEventListener("click",(e)=>{
             openProject('Inbox',e.target)
             makeAddTaskButtonVisible()
@@ -99,6 +100,13 @@ const Display = ()=>{
             })
         })
 
+        removeProjectIcons.forEach((icon)=>{
+            icon.addEventListener("click",(e)=>{
+                const projectName = e.target.parentNode.parentNode.id
+                deleteProject(projectName)
+                removeProject(projectName)
+            })
+        })
     }
 
     const initAddProjectButtons = ()=>{
@@ -106,7 +114,6 @@ const Display = ()=>{
         const addProjectButton = document.querySelector("#button-add-project")
         const addProjectAddButton = document.querySelector(".add-project-popup-add-button")
         const addProjectCancelButton = document.querySelector(".add-project-popup-cancel-button")
-
         addProjectButton.addEventListener("click",()=>{
             makeAddProjectButtonInvisible()
             makeAddProjectPopupVisible()
@@ -191,7 +198,7 @@ const Display = ()=>{
                     <p aria-hidden="true">${projectName}</p>
                 </div>
                 <div class="right-task-panel">
-                    <i class="fas fa-times"></i>
+                    <i class="fas fa-times"  id="remove-project-icon"></i>
                 </div>
             </button>
         `
@@ -214,6 +221,14 @@ const Display = ()=>{
             </div>
             </button>
         `
+    }
+
+    //Removing Project HTML Content
+
+    const deleteProject = (projectName)=>{
+        const projectList = document.querySelector('.projects-list')
+        const projectNode = document.querySelector(`#${projectName}`)
+        projectList.removeChild(projectNode)
     }
 
     // Creating Objects
@@ -264,6 +279,12 @@ const Display = ()=>{
 
         makeAddTaskButtonVisible()
         makeTaskPopupInvisible()
+    }
+
+    //Deleting Objects
+
+    const removeProject =(projectName)=>{
+        toDoListObj.removeProject(projectName)
     }
 
     return{
