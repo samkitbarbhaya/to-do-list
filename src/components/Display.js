@@ -129,6 +129,20 @@ const Display = ()=>{
         })
     }
 
+    const initTaskButtons = ()=>{
+
+        const removeTaskIcons = document.querySelectorAll('#remove-task-icon')
+        removeTaskIcons.forEach((icon)=>{
+            icon.addEventListener("click",(e)=>{
+                const projectName = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].textContent
+                const taskName = e.target.parentNode.childNodes[3]
+                const taskNode = e.target.parentNode.parentNode
+                deleteTask(taskNode)
+                removeTask(taskName, projectName)
+            })
+        })
+    }
+
     const initAddTaskButtons = ()=>{
 
         const addTaskButton = document.querySelector('.button-add-task')
@@ -210,7 +224,7 @@ const Display = ()=>{
         project_tasks.innerHTML+=`
             <button class="button-task">
             <div class="left-task-panel">
-                <i class="far fa-circle" aria-hidden="true"></i>
+                <i class="far fa-circle" aria-hidden="true" id="remove-task-icon"></i>
                 <p class="task-content">${taskName}</p>
                 <input type="text" class="input-task-name">
             </div>
@@ -221,6 +235,7 @@ const Display = ()=>{
             </div>
             </button>
         `
+        initTaskButtons()
     }
 
     //Removing Project HTML Content
@@ -229,6 +244,11 @@ const Display = ()=>{
         const projectList = document.querySelector('.projects-list')
         const projectNode = document.querySelector(`#${projectName}`)
         projectList.removeChild(projectNode)
+    }
+
+    const deleteTask = (taskNode)=>{
+        const taskList = document.querySelector('.task-list')
+        taskList.removeChild(taskNode)
     }
 
     // Creating Objects
@@ -285,6 +305,12 @@ const Display = ()=>{
 
     const removeProject =(projectName)=>{
         toDoListObj.removeProject(projectName)
+    }
+
+    const removeTask = (taskName, projectName)=>{
+        const projectObj = toDoListObj.getProject(projectName)
+        projectObj.removeTask(taskName)
+        console.log(projectObj.TaskList)
     }
 
     return{
