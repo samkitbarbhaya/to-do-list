@@ -114,11 +114,13 @@ const Display = ()=>{
         const addProjectButton = document.querySelector("#button-add-project")
         const addProjectAddButton = document.querySelector(".add-project-popup-add-button")
         const addProjectCancelButton = document.querySelector(".add-project-popup-cancel-button")
+
         addProjectButton.addEventListener("click",()=>{
             makeAddProjectButtonInvisible()
             makeAddProjectPopupVisible()
             makeAddTaskButtonVisible()
             makeTaskPopupInvisible()
+            makeAllTaskLabelVisible()
         })
 
         addProjectAddButton.addEventListener("click",addProject)
@@ -146,6 +148,13 @@ const Display = ()=>{
 
         taskLabels.forEach((taskLabel)=>{
             taskLabel.addEventListener("click",(e)=>{
+
+                makeAllTaskLabelVisible()
+                makeAddProjectButtonVisible()
+                makeAddProjectPopupInvisible()
+                makeAddTaskButtonVisible()
+                makeTaskPopupInvisible()
+            
                 const taskLabelNode = e.target
                 const oldTaskLabelValue = taskLabelNode.textContent
                 const taskLabelInputNode = e.target.parentNode.childNodes[5]
@@ -153,28 +162,28 @@ const Display = ()=>{
 
                 makeTaskLabelInvisible(taskLabelNode)
                 makeTaskLabelInputVisible(taskLabelInputNode)
-                addEventListener("keypress", (e) => {
+                taskLabelInputNode.addEventListener("keydown", (e) => {
                     if(e.key=='Enter'){
                         const newTaskLabelValue = taskLabelInputNode.value
-                        if(newTaskLabelValue === oldTaskLabelValue){
-                            alert("Name of the Task cannot be the same!")
-                            return
-                        }
-                        const projectName = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].textContent
+                        const projectName = taskLabelNode.parentNode.parentNode.parentNode.parentNode.childNodes[1].textContent
                         const projectObj = toDoListObj.getProject(projectName)
-                        if(projectObj.contains(newTaskLabelValue)){
-                            alert("This name has already been taken by another task!")
+                        if(newTaskLabelValue === ""){
+                            alert("Task Name cannot be empty!")
                             return
                         }
-
+                        if(projectObj.contains(newTaskLabelValue)){
+                            taskLabelInputNode.value = ""
+                            alert("Task Name cannot be the same!")
+                            return
+                        }
                         taskLabelNode.textContent = taskLabelInputNode.value
                         const taskObj = projectObj.getTask(oldTaskLabelValue)
                         taskObj.Name = newTaskLabelValue
-                        
                         makeTaskLabelVisible(taskLabelNode)
                         makeTaskLabelInputInvisible(taskLabelInputNode)
+                        removeTaskLabelInputEventListener()
                     }
-                });
+                })
             })
         })
 
@@ -192,6 +201,7 @@ const Display = ()=>{
             makeAddProjectPopupInvisible()
             makeAddTaskButtonInvisible()
             makeTaskPopupVisible()
+            makeAllTaskLabelVisible()
         })
 
         addTaskAddButton.addEventListener("click",addTask)
@@ -199,6 +209,13 @@ const Display = ()=>{
         addTaskCancelButton.addEventListener("click",()=>{
             makeTaskPopupInvisible()
             makeAddTaskButtonVisible()
+        })
+    }
+
+    const removeTaskLabelInputEventListener = ()=>{
+        const abc = document.querySelectorAll('.input-task-name')
+        abc.forEach((abcEl)=>{
+            removeEventListener("keypress",abcEl)
         })
     }
 
@@ -253,6 +270,15 @@ const Display = ()=>{
     const makeTaskLabelInputInvisible = (taskLabelInputNode)=>{
         taskLabelInputNode.value = ""
         taskLabelInputNode.classList.remove('active')
+    }
+
+    const makeAllTaskLabelVisible = ()=>{
+        const taskLabelNodesList = document.querySelectorAll('.task-content')
+        console.log(taskLabelNodesList)
+        taskLabelNodesList.forEach((task)=>{
+            makeTaskLabelVisible(task)
+            makeTaskLabelInputInvisible(task.parentNode.childNodes[5])
+        })
     }
 
     //Creating Content HTML Files
