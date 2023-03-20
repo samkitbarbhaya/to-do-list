@@ -321,6 +321,14 @@ button, input {
     outline: none;
 }
 
+.due-date {
+    display: block;
+}
+
+.due-date.invisible { 
+    display: none;
+}
+
 .input-due-date{
     display: none;
 }
