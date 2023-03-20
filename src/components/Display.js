@@ -142,6 +142,7 @@ const Display = ()=>{
         const taskLabels = document.querySelectorAll('.task-content')
         const editTaskNameInput = document.querySelectorAll('.input-task-name')
         const dateLabelButtons = document.querySelectorAll('.due-date')
+        const editDateButtons = document.querySelectorAll('.input-due-date')
 
         removeTaskIcons.forEach((icon)=>{
             removeEventListener("click",icon)
@@ -169,6 +170,10 @@ const Display = ()=>{
             dateLabelButton.addEventListener("click",handleDateLabelButtonClick)
         })
 
+        editDateButtons.forEach((editDateButton)=>{
+            removeEventListener("input",editDateButton) 
+            editDateButton.addEventListener("input",handleDataInputButtonClick)
+        })
     }
 
     const initAddTaskButtons = ()=>{
@@ -236,6 +241,16 @@ const Display = ()=>{
         resetPopupButtons()
         makeDateLabelInvisible(e)
         makeDateInputVisible(e)
+    }
+
+    const handleDataInputButtonClick = (e)=>{
+        const dateValue = e.target.value
+        const dataLabelNode = e.target.parentNode.childNodes[1]
+        dataLabelNode.textContent = dateValue
+        const taskName = e.target.parentNode.parentNode.childNodes[1].childNodes[3].textContent
+        const projectName = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].textContent
+        updateDateTask(projectName,taskName,dateValue)
+        resetPopupButtons()
     }
 
     // Toggling Button Visibility
@@ -451,6 +466,14 @@ const Display = ()=>{
     const removeTask = (taskName, projectName)=>{
         const projectObj = toDoListObj.getProject(projectName)
         projectObj.removeTask(taskName)
+    }
+
+    //Editing Objects
+
+    const updateDateTask = (projectName, taskName, dateValue)=>{
+        const projectObj = toDoListObj.getProject(projectName)
+        const taskObj = projectObj.getTask(taskName)
+        taskObj.Date = dateValue
     }
 
     return{
