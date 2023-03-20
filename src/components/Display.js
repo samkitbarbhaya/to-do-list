@@ -123,11 +123,9 @@ const Display = ()=>{
         const addProjectCancelButton = document.querySelector(".add-project-popup-cancel-button")
 
         addProjectButton.addEventListener("click",()=>{
+            resetPopupButtons()
             makeAddProjectButtonInvisible()
             makeAddProjectPopupVisible()
-            makeAddTaskButtonVisible()
-            makeTaskPopupInvisible()
-            makeAllTaskLabelVisible()
         })
 
         addProjectAddButton.addEventListener("click",addProject)
@@ -142,7 +140,8 @@ const Display = ()=>{
 
         const removeTaskIcons = document.querySelectorAll('#remove-task-icon')
         const taskLabels = document.querySelectorAll('.task-content')
-        const addTaskPopupInputs = document.querySelectorAll('.input-task-name')
+        const editTaskNameInput = document.querySelectorAll('.input-task-name')
+        const dateLabelButtons = document.querySelectorAll('.due-date')
 
         removeTaskIcons.forEach((icon)=>{
             removeEventListener("click",icon)
@@ -160,9 +159,14 @@ const Display = ()=>{
             taskLabel.addEventListener("click",handleTaskLabelClick)
         })
 
-        addTaskPopupInputs.forEach((addTaskPopupInput)=>{
+        editTaskNameInput.forEach((addTaskPopupInput)=>{
             removeEventListener("keypress",addTaskPopupInput)
-            addTaskPopupInput.addEventListener("keypress", handleAddTaskPopupInput)
+            addTaskPopupInput.addEventListener("keypress", handleEditTaskNameInput)
+        })
+
+        dateLabelButtons.forEach((dateLabelButton)=>{
+            removeEventListener("click",dateLabelButton)
+            dateLabelButton.addEventListener("click",handleDateLabelButtonClick)
         })
 
     }
@@ -174,11 +178,9 @@ const Display = ()=>{
         const addTaskCancelButton = document.querySelector('.button-cancel-task-popup')
         
         addTaskButton.addEventListener("click",()=>{
-            makeAddProjectButtonVisible()
-            makeAddProjectPopupInvisible()
+            resetPopupButtons()
             makeAddTaskButtonInvisible()
             makeTaskPopupVisible()
-            makeAllTaskLabelVisible()
         })
 
         addTaskAddButton.addEventListener("click",addTask)
@@ -191,9 +193,7 @@ const Display = ()=>{
 
     const handleTaskLabelClick = (e)=>{
         
-        makeAllTaskLabelVisible()
-        makeAddProjectButtonVisible()
-        makeAddProjectPopupInvisible()
+        resetPopupButtons()
         makeAddTaskButtonVisible()
         makeTaskPopupInvisible()
 
@@ -206,7 +206,7 @@ const Display = ()=>{
         makeTaskLabelInputVisible(taskLabelInputNode)
     }
 
-    const handleAddTaskPopupInput = (e)=>{
+    const handleEditTaskNameInput = (e)=>{
         if(e.key=='Enter'){
             const taskInputNode = e.target
             const taskLabelNode = e.target.parentNode.childNodes[3]
@@ -230,6 +230,12 @@ const Display = ()=>{
             makeTaskLabelVisible(taskLabelNode)
             makeTaskLabelInputInvisible(taskInputNode)
         }
+    }
+
+    const handleDateLabelButtonClick = (e)=>{
+        resetPopupButtons()
+        makeDateLabelInvisible(e)
+        makeDateInputVisible(e)
     }
 
     // Toggling Button Visibility
@@ -292,6 +298,47 @@ const Display = ()=>{
             makeTaskLabelVisible(task)
             makeTaskLabelInputInvisible(task.parentNode.childNodes[5])
         })
+    }
+
+    const makeAllTaskInputInvisible = ()=>{
+        const taskInputNodes = document.querySelectorAll('.input-task-name')
+        taskInputNodes.forEach((taskInputNode)=>{
+            taskInputNode.classList.remove('active')
+        })
+    }
+
+    const makeDateLabelInvisible = (e)=>{
+        e.target.classList.add('invisible')
+    }
+
+    const makeDateInputVisible = (e)=>{
+        const dateInput = e.target.parentNode.childNodes[3]
+        dateInput.classList.add('active')
+    }
+
+    const makeAllDateLabelVisible = ()=>{
+        const labelDateNodes = document.querySelectorAll('.due-date')
+        labelDateNodes.forEach((labelDateNode)=>{
+            labelDateNode.classList.remove('invisible')
+        })
+    }
+
+    const makeAllDateInputInvisible = ()=>{
+        const inputDataNodes = document.querySelectorAll('.input-due-date')
+        inputDataNodes.forEach((inputDataNode)=>{
+            inputDataNode.classList.remove('active')
+        })
+    }   
+
+    const resetPopupButtons = ()=>{
+        makeAddProjectButtonVisible()
+        makeAddProjectPopupInvisible()
+        makeAddTaskButtonVisible()
+        makeTaskPopupInvisible()
+        makeAllTaskLabelVisible()
+        makeAllTaskInputInvisible()
+        makeAllDateLabelVisible()
+        makeAllDateInputInvisible()
     }
 
     //Creating Content HTML Files
