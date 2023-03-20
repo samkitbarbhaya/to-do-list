@@ -6,14 +6,14 @@ import { toDoList } from "./ToDoList"
 const Display = ()=>{
 
     const toDoListObj = toDoList()
-    const t1 = task("T1")
-    const t2 = task("T2")
+    const t1 = task("T1","No Date")
+    const t2 = task("T2","No Date")
 
     const p1 = project("P1")
     toDoListObj.addProject(p1.Name)
 
-    toDoListObj.getProject(p1.Name).addTask(t1.Name)
-    toDoListObj.getProject(p1.Name).addTask(t2.Name)
+    toDoListObj.getProject(p1.Name).addTask(t1.Name,"No Date")
+    toDoListObj.getProject(p1.Name).addTask(t2.Name,"No Date")
 
     const loadHomePage = ()=> {
         loadProjects()
@@ -41,7 +41,10 @@ const Display = ()=>{
         makeAddTaskButtonVisible()
         makeTaskPopupInvisible()
 
-        console.log("Opening",projectName)
+        if(projectName==='Today' || projectName=='This Week'){
+            toDoListObj.updateTodayProject()
+            toDoListObj.updateWeekProject()
+        }
         //Fetch All Nav Buttons and remove active class from them
         const defaultButtons = document.querySelectorAll('.nav-default-button')
         const userButtons = document.querySelectorAll('.nav-user-button')
@@ -172,7 +175,7 @@ const Display = ()=>{
 
         editDateButtons.forEach((editDateButton)=>{
             removeEventListener("input",editDateButton) 
-            editDateButton.addEventListener("input",handleDataInputButtonClick)
+            editDateButton.addEventListener("input",handleDateInputButtonClick)
         })
     }
 
@@ -196,6 +199,8 @@ const Display = ()=>{
         })
     }
 
+
+    // Button Handlers
     const handleTaskLabelClick = (e)=>{
         
         resetPopupButtons()
@@ -243,7 +248,7 @@ const Display = ()=>{
         makeDateInputVisible(e)
     }
 
-    const handleDataInputButtonClick = (e)=>{
+    const handleDateInputButtonClick = (e)=>{
         const dateValue = e.target.value
         const dataLabelNode = e.target.parentNode.childNodes[1]
         dataLabelNode.textContent = dateValue
@@ -256,7 +261,8 @@ const Display = ()=>{
     // Toggling Button Visibility
 
     const makeAddProjectButtonVisible = ()=>{
-        document.querySelector('.button-add-project').classList.remove('invisible')
+        const obj = document.querySelector('.button-add-project')
+        obj.classList.remove('invisible')
     }
 
     const makeAddProjectButtonInvisible = ()=>{
@@ -273,7 +279,10 @@ const Display = ()=>{
     }
 
     const makeAddTaskButtonVisible = ()=>{
-        document.querySelector('.button-add-task').classList.remove("invisible")
+        const obj = document.querySelector('.button-add-task')
+        const projectName = obj.parentNode.childNodes[1].textContent
+        if(projectName == "Today" || projectName=="This Week") return
+        obj.classList.remove('invisible')
     }
 
     const makeAddTaskButtonInvisible = ()=>{
@@ -447,9 +456,9 @@ const Display = ()=>{
             return
         }
 
-        const taskObj = task(taskName)
+        const taskObj = task(taskName,"No Date")
 
-        projectObj.addTask(taskObj.Name)
+        projectObj.addTask(taskObj.Name,taskObj.Date)
 
         createTask(taskObj.Name,taskObj.Date)
 

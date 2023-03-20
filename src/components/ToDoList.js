@@ -27,14 +27,13 @@ const toDoList = ()=>{
 
     const updateTodayProject = ()=>{
         getProject('Today').TaskList = []
-
         projectList.forEach((projectEl)=>{
-            if(projectEl.getName()==='This Week' || projectEl.getName()==='Today') 
+            if(projectEl.Name==='This Week' || projectEl.Name==='Today') 
                 return
-            const todayTasks = project.getTasksToday()
+            const todayTasks = projectEl.getTasksToday()
             todayTasks.forEach((taskEl)=>{
-                const taskName = `${taskEl.getName()} (${projectEl.getName()})`
-                getProject('Today').addTask(taskName,taskEl.getDate())
+                const taskName = `${taskEl.Name} (${projectEl.Name})`
+                getProject('Today').addTask(taskName,taskEl.Date)
             })
         })
     }
@@ -43,12 +42,12 @@ const toDoList = ()=>{
         getProject('This Week').TaskList = []
 
         projectList.forEach((projectEl)=>{
-            if(projectEl.getName()==='This Week' || projectEl.getName()==='Today') 
+            if(projectEl.Name==='This Week' || projectEl.Name==='Today') 
                 return
-            const weekTasks = project.getTasksWeek()
+            const weekTasks = projectEl.getTasksWeek()
             weekTasks.forEach((taskEl)=>{
-                const taskName = `${taskEl.getName()} (${projectEl.getName()})`
-                getProject('This Week').addTask(taskName,taskEl.getDate())
+                const taskName = `${taskEl.Name} (${projectEl.Name})`
+                getProject('This Week').addTask(taskName,taskEl.Date)
             })
         })
     }

@@ -1,14 +1,14 @@
 
-const task = (name) => {
+const task = (name,date) => {
 
-    let dueDate = "No Date"
+    let dueDate = date
 
-    // const getFormattedDate = ()=>{
-    //     const day = this.dueDate.split('/')[0]
-    //     const month = this.dueDate.split('/')[1]
-    //     const year = this.dueDate.split('/')[2]
-    //     return `${month}/${day}/${year}`
-    // }
+    const getFormattedDate = ()=>{
+        const day = this.dueDate.split('/')[0]
+        const month = this.dueDate.split('/')[1]
+        const year = this.dueDate.split('/')[2]
+        return `${month}/${day}/${year}`
+    }
     
     return {
         get Name(){

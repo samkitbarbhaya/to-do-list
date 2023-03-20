@@ -5,9 +5,9 @@ const project = (name) => {
 
     let taskList = []
 
-    const addTask = (taskName)=>{
+    const addTask = (taskName, taskDate)=>{
         if(taskList.find((taskEl)=>{ taskEl.Name === taskName})) return
-        let taskEl = task(taskName)
+        let taskEl = task(taskName, taskDate)
         taskList.push(taskEl)
     }
 
@@ -38,15 +38,23 @@ const project = (name) => {
 
     const getTasksToday = ()=>{
         return taskList.filter((taskEl)=>{
-            const taskDate = new Date(taskEl.Date)
+            if(taskEl.Date==undefined) return false
+            const year = taskEl.Date.split('-')[0]
+            const month = taskEl.Date.split('-')[1]
+            const day = taskEl.Date.split('-')[2]
+            const taskDate = new Date(year,month-1,day)
             return isToday(toDate(taskDate))
         })
     }
     
     const getTasksWeek = ()=>{
         return taskList.filter((taskEl) => {
-            const taskDate = new Date(taskEl.Date)
-            return isThisWeek(subDays(toDate(taskDate), 1))
+            if(taskEl.Date==undefined) return false
+            const year = taskEl.Date.split('-')[0]
+            const month = taskEl.Date.split('-')[1]
+            const day = taskEl.Date.split('-')[2]
+            const taskDate = new Date(year,month-1,day)
+            return isThisWeek(toDate(taskDate))
         })
     }
 
