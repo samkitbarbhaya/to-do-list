@@ -17,7 +17,7 @@ const Display = ()=>{
 
     const loadHomePage = ()=> {
         loadProjects()
-        initProjectButtons()
+        initDefaultProjectButtons()
         openProject('Inbox',document.querySelector('#inbox-button'))
         initAddProjectButtons()
         initAddTaskButtons()
@@ -69,13 +69,11 @@ const Display = ()=>{
 
     //Event Listeners
 
-    const initProjectButtons = ()=>{
+    const initDefaultProjectButtons = ()=>{
 
         const inboxButton = document.querySelector("#inbox-button")
         const todayButton = document.querySelector("#today-button")
         const weekButton =  document.querySelector("#this-week-button")
-        const projectButtons = document.querySelectorAll(".nav-user-button")
-        const removeProjectIcons = document.querySelectorAll('#remove-project-icon')
         
         inboxButton.addEventListener("click",(e)=>{
             openProject('Inbox',e.target)
@@ -92,7 +90,15 @@ const Display = ()=>{
             makeAddTaskButtonInvisible()
         })
 
+    }
+
+    const initUserProjectButtons = ()=>{
+
+        const projectButtons = document.querySelectorAll(".nav-user-button")
+        const removeProjectIcons = document.querySelectorAll('#remove-project-icon')
+
         projectButtons.forEach((projectButton)=>{
+            removeEventListener("click",projectButton)
             projectButton.addEventListener("click",(e)=>{
                 if(e.target !== e.currentTarget) return
                 openProject(e.target.id,e.target)
@@ -101,6 +107,7 @@ const Display = ()=>{
         })
 
         removeProjectIcons.forEach((icon)=>{
+            removeEventListener("click",icon)
             icon.addEventListener("click",(e)=>{
                 const projectName = e.target.parentNode.parentNode.id
                 deleteProject(projectName)
@@ -135,8 +142,10 @@ const Display = ()=>{
 
         const removeTaskIcons = document.querySelectorAll('#remove-task-icon')
         const taskLabels = document.querySelectorAll('.task-content')
+        const addTaskPopupInputs = document.querySelectorAll('.input-task-name')
 
         removeTaskIcons.forEach((icon)=>{
+            removeEventListener("click",icon)
             icon.addEventListener("click",(e)=>{
                 const projectName = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].textContent
                 const taskName = e.target.parentNode.childNodes[3].textContent
@@ -147,46 +156,14 @@ const Display = ()=>{
         })
 
         taskLabels.forEach((taskLabel)=>{
-            taskLabel.addEventListener("click",(e)=>{
-
-                makeAllTaskLabelVisible()
-                makeAddProjectButtonVisible()
-                makeAddProjectPopupInvisible()
-                makeAddTaskButtonVisible()
-                makeTaskPopupInvisible()
-            
-                const taskLabelNode = e.target
-                const oldTaskLabelValue = taskLabelNode.textContent
-                const taskLabelInputNode = e.target.parentNode.childNodes[5]
-                taskLabelInputNode.value = oldTaskLabelValue
-
-                makeTaskLabelInvisible(taskLabelNode)
-                makeTaskLabelInputVisible(taskLabelInputNode)
-                taskLabelInputNode.addEventListener("keydown", (e) => {
-                    if(e.key=='Enter'){
-                        const newTaskLabelValue = taskLabelInputNode.value
-                        const projectName = taskLabelNode.parentNode.parentNode.parentNode.parentNode.childNodes[1].textContent
-                        const projectObj = toDoListObj.getProject(projectName)
-                        if(newTaskLabelValue === ""){
-                            alert("Task Name cannot be empty!")
-                            return
-                        }
-                        if(projectObj.contains(newTaskLabelValue)){
-                            taskLabelInputNode.value = ""
-                            alert("Task Name cannot be the same!")
-                            return
-                        }
-                        taskLabelNode.textContent = taskLabelInputNode.value
-                        const taskObj = projectObj.getTask(oldTaskLabelValue)
-                        taskObj.Name = newTaskLabelValue
-                        makeTaskLabelVisible(taskLabelNode)
-                        makeTaskLabelInputInvisible(taskLabelInputNode)
-                        removeTaskLabelInputEventListener()
-                    }
-                })
-            })
+            removeEventListener("click",taskLabel)
+            taskLabel.addEventListener("click",handleTaskLabelClick)
         })
 
+        addTaskPopupInputs.forEach((addTaskPopupInput)=>{
+            removeEventListener("keypress",addTaskPopupInput)
+            addTaskPopupInput.addEventListener("keypress", handleAddTaskPopupInput)
+        })
 
     }
 
@@ -212,11 +189,47 @@ const Display = ()=>{
         })
     }
 
-    const removeTaskLabelInputEventListener = ()=>{
-        const abc = document.querySelectorAll('.input-task-name')
-        abc.forEach((abcEl)=>{
-            removeEventListener("keypress",abcEl)
-        })
+    const handleTaskLabelClick = (e)=>{
+        
+        makeAllTaskLabelVisible()
+        makeAddProjectButtonVisible()
+        makeAddProjectPopupInvisible()
+        makeAddTaskButtonVisible()
+        makeTaskPopupInvisible()
+
+        const taskLabelNode = e.target
+        const oldTaskLabelValue = taskLabelNode.textContent
+        const taskLabelInputNode = e.target.parentNode.childNodes[5]
+        taskLabelInputNode.value = oldTaskLabelValue
+
+        makeTaskLabelInvisible(taskLabelNode)
+        makeTaskLabelInputVisible(taskLabelInputNode)
+    }
+
+    const handleAddTaskPopupInput = (e)=>{
+        if(e.key=='Enter'){
+            const taskInputNode = e.target
+            const taskLabelNode = e.target.parentNode.childNodes[3]
+            const oldTaskLabelValue = taskLabelNode.textContent
+            const newTaskLabelValue = taskInputNode.value
+            const projectName = taskLabelNode.parentNode.parentNode.parentNode.parentNode.childNodes[1].textContent
+            const projectObj = toDoListObj.getProject(projectName)
+
+            if(newTaskLabelValue === ""){
+                alert("Task Name cannot be empty!")
+                return
+            }
+            if(projectObj.contains(newTaskLabelValue)){
+                alert("Task Name cannot be the same!")
+                return
+            }
+            taskLabelNode.textContent = newTaskLabelValue
+            const taskObj = projectObj.getTask(oldTaskLabelValue)
+            taskObj.Name = newTaskLabelValue
+            projectObj.renameTask(newTaskLabelValue,oldTaskLabelValue)
+            makeTaskLabelVisible(taskLabelNode)
+            makeTaskLabelInputInvisible(taskInputNode)
+        }
     }
 
     // Toggling Button Visibility
@@ -297,7 +310,7 @@ const Display = ()=>{
                 </div>
             </button>
         `
-        initProjectButtons()
+        initUserProjectButtons()
     }
 
     const createTask = (taskName, taskDate)=>{

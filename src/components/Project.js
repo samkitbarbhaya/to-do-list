@@ -25,6 +25,17 @@ const project = (name) => {
         return taskList.find((task)=> task.Name === taskName)
     }
 
+    const renameTask = (newTaskName, oldTaskName) =>{
+        taskList.map((taskEl)=>{
+            if(taskEl.Name === oldTaskName){
+                taskEl.Name = newTaskName
+                return taskEl
+            }else{
+                return taskEl
+            }
+        })
+    }
+
     const getTasksToday = ()=>{
         return taskList.filter((taskEl)=>{
             const taskDate = new Date(taskEl.Date)
@@ -56,6 +67,7 @@ const project = (name) => {
         removeTask,
         contains,
         getTask,
+        renameTask,
         getTasksToday,
         getTasksWeek,    
     }
